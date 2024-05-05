@@ -1,0 +1,36 @@
+class Solution {
+  public:
+  int findMax(vector<int> arr){
+        int ans = INT_MIN;
+        for(int i = 0; i < arr.size(); i++){
+            ans = max(ans, arr[i]);
+        }
+        return ans;
+    }
+
+    long long totalTime(vector<int> arr, int h){
+        long long ans = 0;
+        for(long long i = 0; i < arr.size(); i++){
+            ans += ceil((double)arr[i]/(double)h);
+        }
+        return ans;
+    }
+    
+    int Solve(int N, vector<int>& piles, int h) {
+        // Code here
+        long long low = 1;
+        long long high = findMax(piles);
+        long long ans = -1;
+        while(low <= high){
+            long long mid = low + (high-low)/2;
+            if(totalTime(piles, mid) <= h){
+                ans = mid;
+                high = mid - 1;
+            }
+            else{
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+};
