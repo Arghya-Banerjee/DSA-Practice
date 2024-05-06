@@ -1,0 +1,35 @@
+vector<int> noSibling(Node* node)
+{
+    // code here
+    vector<int> res;
+    queue<Node *> q;
+    
+    q.push(node);
+    while(!q.empty()) 
+    {
+        int n = q.size();
+        while(n--) 
+        {
+            auto p = q.front();
+            q.pop();
+            
+            if(p->left)
+                q.push(p->left);
+                
+            if(p->right)
+                q.push(p->right);
+            
+            if(p->left and !p->right)
+                res.push_back(p->left->data);
+            
+            if(p->right and !p->left)
+                res.push_back(p->right->data);
+        }
+    }
+    
+    if(res.size() == 0)
+        res.push_back(-1);
+    
+    sort(res.begin(), res.end());
+    return res;
+}
