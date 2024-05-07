@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int helper(vector<int> arr, int dist, int cows){
+        int cowsP = 1;
+        int last = arr[0];
+        for(int i = 0; i < arr.size(); i++){
+            if(arr[i] - last >= dist){
+                cowsP++;
+                last = arr[i];
+            }
+            if(cowsP >= cows) return true;
+        }
+        return false;
+    }
+
+    int solve(int n, int k, vector<int> &stalls) {
+    
+        // Write your code here
+        sort(stalls.begin(), stalls.end());
+        int low = 1, high = stalls[n-1]-stalls[0];
+        while(low <= high){
+            int mid = low + (high - low)/2;
+            if(helper(stalls, mid, k) == true){
+                low = mid + 1;
+            }
+            else high = mid - 1;
+        }
+        return high;
+    }
+};
