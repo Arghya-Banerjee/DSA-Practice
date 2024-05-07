@@ -1,0 +1,44 @@
+class Solution{
+    public:
+    bool check(vector<int>& A, int mins, int N) {
+        int ans=0;
+        for(int i=0; i<A.size(); ++i) {
+            int sum=0, temp=A[i];
+            while(sum<mins) {
+                sum+=temp;
+                if(sum<=mins) ans++;
+                if(ans==N) return true;
+                temp+=A[i];
+            }
+        }
+        return false;
+    }
+    
+    int findMinTime(int N, vector<int>&A, int L){
+        //write your code here
+        sort(A.begin(),A.end());
+        int maxtime=0;
+        int k=0;
+        int t=0;
+        int i=1;
+        while(k<N){
+            k+=1;
+            t+=A[L-1]*i;
+            i++;
+        }
+        int start=0;
+        int end=t;
+        int ans=INT_MAX;
+        while(start<=end){
+            int mid=(start+(end-start)/2);
+            if(check(A,mid,N)){
+                ans=min(ans,mid);
+                end=mid-1;
+            }
+            else{
+                start=mid+1;
+            }
+        }
+        return ans;
+    }
+};
